@@ -1,0 +1,22 @@
+mysql:
+  container_name: mysql
+  image: mysql/mysql-server:5.7
+  environment:
+    MYSQL_RANDOM_ROOT_PASSWORD: "yes"
+    MYSQL_DATABASE: ghost
+    MYSQL_USER: ghost
+    MYSQL_PASSWORD: ghost
+  volumes:
+    - /var/lib/mysql
+
+ghost:
+  container_name: ghost
+  build: .
+  ports:
+    - "80:2368"
+  environment:
+    NODE_ENV: production
+  links:
+    - mysql
+  volumes:
+    - ./content/:/content
